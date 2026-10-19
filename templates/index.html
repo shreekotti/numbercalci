@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Number Calculator</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <main class="card">
+    <p class="eyebrow">A Python web app</p>
+    <h1>Number calculator</h1>
+    <p class="intro">Enter two numbers and choose an operation.</p>
+
+    <form method="post">
+      <div class="fields">
+        <div>
+          <label for="number_a">Number A</label>
+          <input id="number_a" name="number_a" type="number" step="any" value="{{ number_a }}" placeholder="e.g. 12" required>
+        </div>
+        <div>
+          <label for="number_b">Number B</label>
+          <input id="number_b" name="number_b" type="number" step="any" value="{{ number_b }}" placeholder="e.g. 5" required>
+        </div>
+      </div>
+
+      <label for="operation">Operation</label>
+      <select id="operation" name="operation">
+        <option value="add" {% if operation == 'add' %}selected{% endif %}>Add (+)</option>
+        <option value="subtract" {% if operation == 'subtract' %}selected{% endif %}>Subtract (−)</option>
+        <option value="multiply" {% if operation == 'multiply' %}selected{% endif %}>Multiply (×)</option>
+      </select>
+      <button type="submit">Calculate</button>
+    </form>
+
+    {% if error %}
+      <section class="message error" role="alert"><strong>There’s a problem</strong><p>{{ error }}</p></section>
+    {% elif result is not none %}
+      <section class="message success" aria-live="polite"><strong>Result</strong><p>{{ result }}</p></section>
+    {% else %}
+      <section class="message hint"><strong>Ready</strong><p>Your answer will appear here.</p></section>
+    {% endif %}
+  </main>
+</body>
+</html>
